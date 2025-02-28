@@ -1,0 +1,4 @@
+module_path /usr/local/lib/baresip/modules
+audio_player alsa,default
+audio_source alsa,default
+audio_alert alsa,default

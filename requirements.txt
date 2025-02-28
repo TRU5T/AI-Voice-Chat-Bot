@@ -1,0 +1,7 @@
+pjsua2
+openai
+elevenlabs
+sounddevice
+numpy
+ffmpeg-python
+pyyaml

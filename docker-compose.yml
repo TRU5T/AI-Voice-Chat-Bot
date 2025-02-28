@@ -1,0 +1,15 @@
+version: '3'
+services:
+  sip-bot:
+    build: .
+    container_name: sip-bot
+    restart: always
+    network_mode: "host"
+    environment:
+      - SIP_USERNAME=1010
+      - SIP_PASSWORD=your_sip_password
+      - SIP_DOMAIN=your_3cx_server_ip
+      - OPENAI_API_KEY=your_openai_key
+      - ELEVENLABS_API_KEY=your_elevenlabs_key
+    volumes:
+      - ./logs:/app/logs
