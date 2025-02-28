@@ -1,10 +1,3 @@
-sip:
-  username: "${SIP_USERNAME}"
-  password: "${SIP_PASSWORD}"
-  domain: "${SIP_DOMAIN}"
-  port: 5060
-  tls_enabled: false
-
 ai:
   openai_key: "${OPENAI_API_KEY}"
   elevenlabs_key: "${ELEVENLABS_API_KEY}"

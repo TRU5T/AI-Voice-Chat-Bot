@@ -8,9 +8,5 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
-      - SIP_USERNAME=${SIP_USERNAME}
-      - SIP_PASSWORD=${SIP_PASSWORD}
-      - SIP_DOMAIN=${SIP_DOMAIN}
     volumes:
       - ./logs:/app/logs
-      - /tmp/baresip.sock:/tmp/baresip.sock
