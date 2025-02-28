@@ -1,7 +1,7 @@
 openai
 sounddevice
 numpy
-faster-whisper
+openai-whisper
 gtts
 PyYAML
 soundfile
