@@ -1,25 +1,21 @@
+# Use a lightweight Python image
 FROM python:3.10
 
-# Install dependencies
-RUN apt update && apt install -y baresip ffmpeg alsa-utils netcat-openbsd
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy files
-COPY requirements.txt .
-COPY main.py .
-COPY config.yaml .
+# Install system dependencies for audio processing
+RUN apt-get update && apt-get install -y \
+    libasound2-dev \
+    portaudio19-dev \
+    libsndfile1-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create necessary directories
-RUN mkdir -p logs
+# Copy project files
+COPY . .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose SIP ports
-EXPOSE 5060/udp
-EXPOSE 5061/tcp
-
-# Run the AI bot
+# Set default command to run the bot
 CMD ["python", "main.py"]

@@ -1,13 +1,13 @@
 sip:
-  username: "T2VJvgg2VG9"
-  password: "v6b34t6VpUH"
-  domain: "infinitum.3cx.com.au"
+  username: "${SIP_USERNAME}"
+  password: "${SIP_PASSWORD}"
+  domain: "${SIP_DOMAIN}"
   port: 5060
   tls_enabled: false
 
 ai:
-  openai_key: "your_openai_key"
-  elevenlabs_key: "your_elevenlabs_key"
+  openai_key: "${OPENAI_API_KEY}"
+  elevenlabs_key: "${ELEVENLABS_API_KEY}"
 
 audio:
   tts_voice: "Adam"

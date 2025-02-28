@@ -28,16 +28,11 @@ with open("config.yaml", "r") as file:
     config = yaml.safe_load(file)
 
 # Override with environment variables if present
-if "OPENAI_API_KEY" in os.environ:
-    config["ai"]["openai_key"] = os.environ["OPENAI_API_KEY"]
-if "ELEVENLABS_API_KEY" in os.environ:
-    config["ai"]["elevenlabs_key"] = os.environ["ELEVENLABS_API_KEY"]
-if "SIP_USERNAME" in os.environ:
-    config["sip"]["username"] = os.environ["SIP_USERNAME"]
-if "SIP_PASSWORD" in os.environ:
-    config["sip"]["password"] = os.environ["SIP_PASSWORD"]
-if "SIP_DOMAIN" in os.environ:
-    config["sip"]["domain"] = os.environ["SIP_DOMAIN"]
+config["ai"]["openai_key"] = os.getenv("OPENAI_API_KEY", config["ai"]["openai_key"])
+config["ai"]["elevenlabs_key"] = os.getenv("ELEVENLABS_API_KEY", config["ai"]["elevenlabs_key"])
+config["sip"]["username"] = os.getenv("SIP_USERNAME", config["sip"]["username"])
+config["sip"]["password"] = os.getenv("SIP_PASSWORD", config["sip"]["password"])
+config["sip"]["domain"] = os.getenv("SIP_DOMAIN", config["sip"]["domain"])
 
 # Initialize APIs
 openai.api_key = config["ai"]["openai_key"]

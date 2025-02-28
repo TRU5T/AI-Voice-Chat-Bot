@@ -1,18 +1,18 @@
-version: '3'
+version: "3.8"
+
 services:
-  sip-bot:
+  ai-voice-bot:
     build: .
-    container_name: sip-bot
-    restart: always
-    network_mode: "host"  # Needed for SIP
+    container_name: ai-voice-bot
+    restart: unless-stopped
+    devices:
+      - "/dev/snd:/dev/snd"  # Allow access to audio (Linux only)
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
-      - SIP_USERNAME=${SIP_USERNAME:-T2VJvgg2VG9}
-      - SIP_PASSWORD=${SIP_PASSWORD:-v6b34t6VpUH}
-      - SIP_DOMAIN=${SIP_DOMAIN:-infinitum.3cx.com.au}
+      - SIP_USERNAME=${SIP_USERNAME}
+      - SIP_PASSWORD=${SIP_PASSWORD}
+      - SIP_DOMAIN=${SIP_DOMAIN}
     volumes:
       - ./logs:/app/logs
-      - ./config:/app/config
-    devices:
-      - "/dev/snd:/dev/snd"  # Pass audio devices
+      - /tmp/baresip.sock:/tmp/baresip.sock

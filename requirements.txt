@@ -1,7 +1,8 @@
-openai>=1.0.0
-elevenlabs>=0.2.24
-sounddevice>=0.4.6
-soundfile>=0.12.1
-numpy>=1.24.0
-pyyaml>=6.0
-openai-whisper>=20231117
+openai
+sounddevice
+numpy
+faster-whisper
+TTS
+PyYAML
+soundfile
+elevenlabs
