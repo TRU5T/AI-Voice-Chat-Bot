@@ -8,9 +8,12 @@ import sounddevice as sd
 import soundfile as sf
 import whisper
 import threading
-import logging
+import logging  # Add this import
 from elevenlabs import generate, play, save
 from elevenlabs.api import User
+
+# Check if running on Windows
+is_windows = platform.system() == "Windows"
 
 # Setup logging
 logging.basicConfig(
@@ -35,7 +38,7 @@ config["sip"]["password"] = os.getenv("SIP_PASSWORD", config["sip"]["password"])
 config["sip"]["domain"] = os.getenv("SIP_DOMAIN", config["sip"]["domain"])
 
 # Initialize APIs
-openai.api_key = config["ai"]["openai_key"]
+openai.api_key = config["ai"]["ai_key"]
 elevenlabs_key = config["ai"]["elevenlabs_key"]
 
 # Global variables

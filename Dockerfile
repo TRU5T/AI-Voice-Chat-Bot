@@ -11,11 +11,14 @@ RUN apt-get update && apt-get install -y \
     libsndfile1-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy project files
-COPY . .
+# Copy only requirements.txt first to leverage Docker cache
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application files
+COPY . .
 
 # Set default command to run the bot
 CMD ["python", "main.py"]

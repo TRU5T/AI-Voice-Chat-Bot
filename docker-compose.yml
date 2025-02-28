@@ -5,8 +5,6 @@ services:
     build: .
     container_name: ai-voice-bot
     restart: unless-stopped
-    devices:
-      - "/dev/snd:/dev/snd"  # Allow access to audio (Linux only)
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
