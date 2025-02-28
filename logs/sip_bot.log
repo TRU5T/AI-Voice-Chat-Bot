@@ -1,0 +1,28 @@
+2025-02-28 17:20:16,039 - sip_bot - INFO - Loading Whisper model...
+2025-02-28 17:20:37,509 - sip_bot - INFO - Whisper model loaded
+2025-02-28 17:20:37,509 - sip_bot - INFO - Starting SIP Bot
+2025-02-28 17:20:37,510 - sip_bot - INFO - Handling new call
+2025-02-28 17:20:37,510 - sip_bot - INFO - Converting to speech: Hello, this is an AI assistant. How can I help you today?
+2025-02-28 17:20:38,858 - httpx - INFO - HTTP Request: GET https://api.elevenlabs.io/v1/voices?show_legacy=true "HTTP/1.1 200 OK"
+2025-02-28 17:20:39,031 - sip_bot - ERROR - Error generating speech: a bytes-like object is required, not 'generator'
+2025-02-28 17:20:42,551 - sip_bot - INFO - Loading Whisper model...
+2025-02-28 17:20:43,488 - sip_bot - INFO - Whisper model loaded
+2025-02-28 17:20:43,489 - sip_bot - INFO - Starting SIP Bot
+2025-02-28 17:20:43,489 - sip_bot - INFO - Handling new call
+2025-02-28 17:20:43,489 - sip_bot - INFO - Converting to speech: Hello, this is an AI assistant. How can I help you today?
+2025-02-28 17:20:44,926 - httpx - INFO - HTTP Request: GET https://api.elevenlabs.io/v1/voices?show_legacy=true "HTTP/1.1 200 OK"
+2025-02-28 17:20:45,100 - sip_bot - ERROR - Error generating speech: a bytes-like object is required, not 'generator'
+2025-02-28 17:20:46,859 - sip_bot - INFO - Loading Whisper model...
+2025-02-28 17:20:47,798 - sip_bot - INFO - Whisper model loaded
+2025-02-28 17:20:47,798 - sip_bot - INFO - Starting SIP Bot
+2025-02-28 17:20:47,799 - sip_bot - INFO - Handling new call
+2025-02-28 17:20:47,799 - sip_bot - INFO - Converting to speech: Hello, this is an AI assistant. How can I help you today?
+2025-02-28 17:20:50,014 - httpx - INFO - HTTP Request: GET https://api.elevenlabs.io/v1/voices?show_legacy=true "HTTP/1.1 200 OK"
+2025-02-28 17:20:50,183 - sip_bot - ERROR - Error generating speech: a bytes-like object is required, not 'generator'
+2025-02-28 17:20:53,514 - sip_bot - INFO - Loading Whisper model...
+2025-02-28 17:20:54,454 - sip_bot - INFO - Whisper model loaded
+2025-02-28 17:20:54,455 - sip_bot - INFO - Starting SIP Bot
+2025-02-28 17:20:54,455 - sip_bot - INFO - Handling new call
+2025-02-28 17:20:54,456 - sip_bot - INFO - Converting to speech: Hello, this is an AI assistant. How can I help you today?
+2025-02-28 17:20:55,396 - httpx - INFO - HTTP Request: GET https://api.elevenlabs.io/v1/voices?show_legacy=true "HTTP/1.1 200 OK"
+2025-02-28 17:20:55,578 - sip_bot - ERROR - Error generating speech: a bytes-like object is required, not 'generator'

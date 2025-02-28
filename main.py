@@ -37,7 +37,7 @@ config["ai"]["elevenlabs_key"] = os.getenv("ELEVENLABS_API_KEY", config["ai"]["e
 openai.api_key = config["ai"]["openai_key"]
 elevenlabs_key = config["ai"]["elevenlabs_key"]
 
-# Initialize ElevenLabs API
+# Initialize ElevenLabs
 elevenlabs = ElevenLabs(api_key=elevenlabs_key)
 
 # Global variables
@@ -84,12 +84,13 @@ def get_ai_response(prompt):
 def speak(text, output_file="response.wav"):
     logger.info(f"Converting to speech: {text}")
     try:
-        audio = elevenlabs.generate(
+        audio_generator = elevenlabs.generate(
             text=text, 
             voice=config["audio"]["tts_voice"]
         )
         with open(output_file, "wb") as f:
-            f.write(audio)
+            for chunk in audio_generator:
+                f.write(chunk)
         logger.info(f"Speech saved to {output_file}")
         return output_file
     except Exception as e:
@@ -132,7 +133,10 @@ def handle_call():
     # Play greeting
     greeting = "Hello, this is an AI assistant. How can I help you today?"
     greeting_file = speak(greeting)
-    os.system(f"start {greeting_file}")  # Play the greeting file on Windows
+    if is_windows:
+        os.system(f"start {greeting_file}")  # Play the greeting file on Windows
+    else:
+        os.system(f"aplay {greeting_file}")  # Play the greeting file on Linux
     
     # Start audio stream for recording
     with sd.InputStream(callback=audio_callback, channels=1, samplerate=sample_rate):
@@ -152,7 +156,10 @@ def handle_call():
             # Generate and speak response
             response = get_ai_response(transcription)
             response_file = speak(response)
-            os.system(f"start {response_file}")  # Play the response file on Windows
+            if is_windows:
+                os.system(f"start {response_file}")  # Play the response file on Windows
+            else:
+                os.system(f"aplay {response_file}")  # Play the response file on Linux
     
     logger.info("Call handling completed")
 
