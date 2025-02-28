@@ -1,7 +1,7 @@
 FROM python:3.10
 
 # Install dependencies
-RUN apt update && apt install -y baresip ffmpeg alsa-utils
+RUN apt update && apt install -y baresip ffmpeg alsa-utils netcat-openbsd
 
 # Set working directory
 WORKDIR /app
@@ -10,7 +10,9 @@ WORKDIR /app
 COPY requirements.txt .
 COPY main.py .
 COPY config.yaml .
-COPY baresip/ /root/.baresip/
+
+# Create necessary directories
+RUN mkdir -p logs
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt

@@ -4,12 +4,15 @@ services:
     build: .
     container_name: sip-bot
     restart: always
-    network_mode: "host"
+    network_mode: "host"  # Needed for SIP
     environment:
-      - SIP_USERNAME=1010
-      - SIP_PASSWORD=your_sip_password
-      - SIP_DOMAIN=your_3cx_server_ip
-      - OPENAI_API_KEY=your_openai_key
-      - ELEVENLABS_API_KEY=your_elevenlabs_key
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+      - SIP_USERNAME=${SIP_USERNAME:-T2VJvgg2VG9}
+      - SIP_PASSWORD=${SIP_PASSWORD:-v6b34t6VpUH}
+      - SIP_DOMAIN=${SIP_DOMAIN:-infinitum.3cx.com.au}
     volumes:
       - ./logs:/app/logs
+      - ./config:/app/config
+    devices:
+      - "/dev/snd:/dev/snd"  # Pass audio devices
