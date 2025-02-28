@@ -2,7 +2,7 @@ openai
 sounddevice
 numpy
 faster-whisper
-TTS
+gtts
 PyYAML
 soundfile
 elevenlabs
