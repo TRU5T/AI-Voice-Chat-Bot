@@ -3,4 +3,4 @@ ai:
   elevenlabs_key: "${ELEVENLABS_API_KEY}"
 
 audio:
-  tts_voice: "Adam"
+  tts_voice: "Matilda"
