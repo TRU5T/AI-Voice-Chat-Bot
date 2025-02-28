@@ -8,9 +8,9 @@ import sounddevice as sd
 import soundfile as sf
 import whisper
 import threading
-import logging  # Add this import
-from elevenlabs import generate, play, save
-from elevenlabs.api import User
+import logging
+import platform
+from elevenlabs import ElevenLabs
 
 # Check if running on Windows
 is_windows = platform.system() == "Windows"
@@ -41,6 +41,9 @@ config["sip"]["domain"] = os.getenv("SIP_DOMAIN", config["sip"]["domain"])
 openai.api_key = config["ai"]["ai_key"]
 elevenlabs_key = config["ai"]["elevenlabs_key"]
 
+# Initialize ElevenLabs API
+elevenlabs = ElevenLabs(api_key=elevenlabs_key)
+
 # Global variables
 call_in_progress = False
 recording = False
@@ -69,7 +72,7 @@ def transcribe_audio(audio_file):
 def get_ai_response(prompt):
     logger.info(f"Generating AI response for: {prompt}")
     try:
-        response = openai.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4o-mini",  # Updated to newer model
             messages=[
                 {"role": "system", "content": "You are a helpful assistant responding to a phone call. Keep your responses concise and natural."},
@@ -87,12 +90,12 @@ def get_ai_response(prompt):
 def speak(text, output_file="response.wav"):
     logger.info(f"Converting to speech: {text}")
     try:
-        audio = generate(
+        audio = elevenlabs.generate(
             text=text, 
-            api_key=elevenlabs_key, 
             voice=config["audio"]["tts_voice"]
         )
-        save(audio, output_file)
+        with open(output_file, "wb") as f:
+            f.write(audio)
         logger.info(f"Speech saved to {output_file}")
         return output_file
     except Exception as e:
