@@ -66,14 +66,12 @@ def transcribe_audio(audio_file):
 def get_ai_response(prompt):
     logger.info(f"Generating AI response for: {prompt}")
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",  # Updated to newer model
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant responding to a phone call. Keep your responses concise and natural."},
-                {"role": "user", "content": prompt}
-            ],
+        response = openai.Completion.create(
+            model="text-davinci-003",  # Use the appropriate model
+            prompt=prompt,
+            max_tokens=150
         )
-        ai_response = response.choices[0].message.content
+        ai_response = response.choices[0].text.strip()
         logger.info(f"AI response: {ai_response}")
         return ai_response
     except Exception as e:
@@ -133,6 +131,10 @@ def handle_call():
     # Play greeting
     greeting = "Hello, this is an AI assistant. How can I help you today?"
     greeting_file = speak(greeting)
+    if greeting_file is None:
+        logger.error("Failed to generate greeting speech.")
+        return
+    
     if is_windows:
         os.system(f"start {greeting_file}")  # Play the greeting file on Windows
     else:
@@ -156,6 +158,10 @@ def handle_call():
             # Generate and speak response
             response = get_ai_response(transcription)
             response_file = speak(response)
+            if response_file is None:
+                logger.error("Failed to generate response speech.")
+                return
+            
             if is_windows:
                 os.system(f"start {response_file}")  # Play the response file on Windows
             else:
