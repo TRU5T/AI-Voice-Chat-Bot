@@ -1,0 +1,2 @@
+CREATE USER aivoice WITH PASSWORD 'aivoice' CREATEDB;
+CREATE DATABASE aivoice OWNER aivoice; 

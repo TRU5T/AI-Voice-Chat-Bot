@@ -1,8 +1,0 @@
-openai
-sounddevice
-numpy
-openai-whisper
-gtts
-PyYAML
-soundfile
-elevenlabs

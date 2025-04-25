@@ -1,12 +1,105 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  ai-voice-bot:
-    build: .
-    container_name: ai-voice-bot
-    restart: unless-stopped
+  # Database
+  postgres:
+    image: postgres:14
     environment:
+      POSTGRES_USER: aivoice
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: aivoice
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Redis for caching
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Drachtio SIP server
+  drachtio:
+    image: drachtio/drachtio-server:latest
+    command: drachtio --contact "sip:*;transport=udp,tcp,tls" --external-ip ${EXTERNAL_IP}
+    ports:
+      - "9022:9022"  # Drachtio admin port
+      - "5060:5060/udp"  # SIP UDP
+      - "5060:5060/tcp"  # SIP TCP 
+      - "5061:5061/tcp"  # SIP TLS
+    volumes:
+      - ./config/drachtio.conf.xml:/etc/drachtio.conf.xml
+    restart: always
+
+  # RTPEngine media server
+  rtpengine:
+    image: drachtio/rtpengine:latest
+    network_mode: host
+    command: rtpengine --interface=${EXTERNAL_IP} --port-min=10000 --port-max=20000 --listen-ng=22222
+    restart: always
+
+  # SIP service
+  sip_service:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.sip
+    depends_on:
+      - postgres
+      - redis
+      - drachtio
+      - rtpengine
+    environment:
+      - NODE_ENV=production
+      - DRACHTIO_HOST=drachtio
+      - DRACHTIO_PORT=9022
+      - DRACHTIO_SECRET=${DRACHTIO_SECRET}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=aivoice
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=aivoice
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
-    volumes:
-      - ./logs:/app/logs
+    restart: always
+
+  # API server
+  api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.api
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=aivoice
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=aivoice
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=${JWT_SECRET}
+    restart: always
+
+  # Web UI
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data: 

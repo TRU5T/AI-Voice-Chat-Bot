@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<drachtio>
+  <admin port="9022" secret="${DRACHTIO_SECRET}"/>
+  
+  <sip>
+    <contact>sip:*;transport=udp,tcp,tls</contact>
+    <tls-cert-file>/etc/drachtio/cert.pem</tls-cert-file>
+    <tls-key-file>/etc/drachtio/key.pem</tls-key-file>
+    <tls-ca-file>/etc/drachtio/ca.pem</tls-ca-file>
+  </sip>
+  
+  <application>
+    <name>ai-voice-agent</name>
+    <script>src/services/sip/index.js</script>
+  </application>
+  
+  <logging>
+    <level>info</level>
+    <filename>/app/logs/drachtio.log</filename>
+  </logging>
+</drachtio> 
